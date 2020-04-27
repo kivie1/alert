@@ -1,3 +1,5 @@
+--
+
 openapi: 3.0.2
 info:
   title: OpenWeatherMap API
@@ -304,3 +306,5 @@ components:
       required:
         - cod
         - message
+        
+        --
