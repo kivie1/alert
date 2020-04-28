@@ -1,130 +1,320 @@
 {
-	"info": {
-		"_postman_id": "e17da914-8c05-43a2-8096-be8efb20abc2",
-		"name": "rist_service",
-		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
-	},
-	"item": [
-		{
-			"name": "http://localhost:8196/notifications",
-			"request": {
-				"method": "POST",
-				"header": [
-					{
-						"key": "Content-Type",
-						"value": "application/json",
-						"type": "text"
-					}
-				],
-				"body": {
-					"mode": "raw",
-					"raw": "{\n\t\"userAgent\": \"chrome\",\n\t\"userAgentSha\": \"sha\",\n\t\"endpoint\": \"/testing\",\n\t\"authType\": \"AUTH_TYPE_PASSWORD\",\n\t\"clientType\": \"CLIENT_TYPE_WEB\",\n\t\"ipAddressDetails\": {\n\t\t\"countryCode\": \"GB\",\n\t\t\"zipCode\": \"ab1221ba\",\n\t\t\"latitude\": \"51.5\",\n\t\t\"longitude\": \"-0.127758\",\n\t\t\"mobile\": \"false\",\n\t\t\"proxy\": \"true\",\n\t\t\"ipIntelScore\": \"0.5\",\n\t\t\"ispName\": \"gohenrcy\",\n\t\t\"blocked\": \"false\"\n\t}\n}"
-				},
-				"url": {
-					"raw": "http://localhost:8096/notifications",
-					"protocol": "http",
-					"host": [
-						"localhost"
-					],
-					"port": "8096",
-					"path": [
-						"notifications"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "test uk",
-			"request": {
-				"method": "POST",
-				"header": [
-					{
-						"key": "Content-Type",
-						"value": "application/json",
-						"type": "text"
-					}
-				],
-				"body": {
-					"mode": "raw",
-					"raw": "{\n\t\"id\": \"10\",\n\t\"title\": \"test message\",\n\t\n\t\"body\": \"dummy message kl simple from gcp through publisher\",\n\t\"deviceToken\": \"22cbbc9a297a8287efad57d69002e0b702e3e327e5c9f68cfd10c5eaf14934a2\",\n\t\"userId\": \"20\",\n\t\"platform\": \"IOS\"\n}"
-				},
-				"url": {
-					"raw": "http://35.189.105.84/notifications",
-					"protocol": "http",
-					"host": [
-						"35",
-						"189",
-						"105",
-						"84"
-					],
-					"path": [
-						"notifications"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "test us",
-			"request": {
-				"method": "POST",
-				"header": [
-					{
-						"key": "Content-Type",
-						"value": "application/json",
-						"type": "text"
-					}
-				],
-				"body": {
-					"mode": "raw",
-					"raw": "{\n\t\"id\": \"10\",\n\t\"title\": \"test message\",\n\t\n\t\"body\": \"dummy message kl simple from gcp\",\n\t\"deviceToken\": \"22cbbc9a297a8287efad57d69002e0b702e3e327e5c9f68cfd10c5eaf14934a2\",\n\t\"userId\": \"20\",\n\t\"platform\": \"IOS\"\n}"
-				},
-				"url": {
-					"raw": "http://35.189.105.84/notifications",
-					"protocol": "http",
-					"host": [
-						"35",
-						"189",
-						"105",
-						"84"
-					],
-					"path": [
-						"notifications"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "http://localhost:8196/notifications Copy",
-			"request": {
-				"method": "POST",
-				"header": [
-					{
-						"key": "Content-Type",
-						"value": "application/json",
-						"type": "text"
-					}
-				],
-				"body": {
-					"mode": "raw",
-					"raw": "{\n\t\"id\": \"10\",\n\t\"title\": \"test message\",\n\t\n\t\"body\": \"dummy message kl simple\",\n\t\"deviceToken\": \"22cbbc9a297a8287efad57d69002e0b702e3e327e5c9f68cfd10c5eaf14934a2\",\n\t\"userId\": \"20\",\n\t\"platform\": \"IOS\"\n}"
-				},
-				"url": {
-					"raw": "http://localhost:8196/notifications",
-					"protocol": "http",
-					"host": [
-						"localhost"
-					],
-					"port": "8196",
-					"path": [
-						"notifications"
-					]
-				}
-			},
-			"response": []
-		}
-	],
-	"protocolProfileBehavior": {}
+  "swagger" : "2.0",
+  "info" : {
+    "version" : "2.0.0-SNAPSHOT",
+    "title" : "gohenry-feedback-service"
+  },
+  "host" : "test-api-uk.gohenry.com",
+  "basePath" : "/gohenry-feedback-service",
+  "tags" : [ {
+    "name" : "CategoryController"
+  }, {
+    "name" : "FeedbackController"
+  }, {
+    "name" : "RatingController"
+  } ],
+  "schemes" : [ "https" ],
+  "paths" : {
+    "/feedbacks/categories" : {
+      "get" : {
+        "tags" : [ "CategoryController" ],
+        "summary" : "Retrieves all feedback categories",
+        "description" : "",
+        "operationId" : "getAllCategories",
+        "responses" : {
+          "200" : {
+            "description" : "Successfully retrieved feedback categories",
+            "schema" : {
+              "type" : "array",
+              "items" : {
+                "$ref" : "#/definitions/Category"
+              }
+            }
+          },
+          "404" : {
+            "description" : "Not found"
+          }
+        }
+      }
+    },
+    "/feedbacks/categories/{categoryId}" : {
+      "get" : {
+        "tags" : [ "CategoryController" ],
+        "summary" : "Retrieves a single feedback category by its id",
+        "description" : "",
+        "operationId" : "getCategory",
+        "parameters" : [ {
+          "name" : "categoryId",
+          "in" : "path",
+          "required" : true,
+          "type" : "integer",
+          "format" : "int64"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Successfully retrieved feedback category",
+            "schema" : {
+              "$ref" : "#/definitions/Category"
+            }
+          },
+          "404" : {
+            "description" : "Not found"
+          }
+        }
+      }
+    },
+    "/feedbacks/categories/{parentId}/children" : {
+      "get" : {
+        "tags" : [ "CategoryController" ],
+        "summary" : "Retrieves all feedback categories for a parentId",
+        "description" : "",
+        "operationId" : "getChildrenCategories",
+        "parameters" : [ {
+          "name" : "parentId",
+          "in" : "path",
+          "required" : true,
+          "type" : "integer",
+          "format" : "int64"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Successfully retrieved feedback categories",
+            "schema" : {
+              "type" : "array",
+              "items" : {
+                "$ref" : "#/definitions/Category"
+              }
+            }
+          },
+          "404" : {
+            "description" : "Not found"
+          }
+        }
+      }
+    },
+    "/users/{userId}/feedbacks" : {
+      "get" : {
+        "tags" : [ "FeedbackController" ],
+        "summary" : "Retrieves feedback submissions for a user",
+        "description" : "",
+        "operationId" : "getUserSubmittedFeedbackTimeLapse",
+        "parameters" : [ {
+          "name" : "userId",
+          "in" : "path",
+          "required" : true,
+          "type" : "integer",
+          "format" : "int64"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Successfully retrieved feedback submissions",
+            "schema" : {
+              "type" : "array",
+              "items" : {
+                "$ref" : "#/definitions/Feedback"
+              }
+            }
+          },
+          "404" : {
+            "description" : "Not found"
+          }
+        }
+      },
+      "post" : {
+        "tags" : [ "FeedbackController" ],
+        "summary" : "Endpoint which takes a DTO representation of the feedback containing response and saves them to the database to return their entity forms.",
+        "description" : "",
+        "operationId" : "storeFeedback",
+        "parameters" : [ {
+          "in" : "body",
+          "name" : "body",
+          "required" : false,
+          "schema" : {
+            "$ref" : "#/definitions/Feedback"
+          }
+        }, {
+          "name" : "userId",
+          "in" : "path",
+          "required" : true,
+          "type" : "integer",
+          "format" : "int64"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Successfully created feedback",
+            "schema" : {
+              "$ref" : "#/definitions/Feedback"
+            }
+          },
+          "400" : {
+            "description" : "Bad request"
+          },
+          "404" : {
+            "description" : "Not found"
+          }
+        }
+      }
+    },
+    "/users/{userId}/rating" : {
+      "get" : {
+        "tags" : [ "RatingController" ],
+        "summary" : "Retrieves rating feedback submission for a user",
+        "description" : "",
+        "operationId" : "getUserSubmittedRatingFeedback",
+        "parameters" : [ {
+          "name" : "userId",
+          "in" : "path",
+          "required" : true,
+          "type" : "integer",
+          "format" : "int64"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Successfully retrieved feedback submissions",
+            "schema" : {
+              "type" : "array",
+              "items" : {
+                "$ref" : "#/definitions/Feedback"
+              }
+            }
+          },
+          "404" : {
+            "description" : "Not found"
+          }
+        }
+      },
+      "post" : {
+        "tags" : [ "RatingController" ],
+        "summary" : "Endpoint which takes a representation of the thumbs up rating containing response and saves them to the database to return their entity forms.",
+        "description" : "",
+        "operationId" : "storeRatingFeedback",
+        "parameters" : [ {
+          "in" : "body",
+          "name" : "body",
+          "required" : false,
+          "schema" : {
+            "$ref" : "#/definitions/Rating"
+          }
+        }, {
+          "name" : "userId",
+          "in" : "path",
+          "required" : true,
+          "type" : "integer",
+          "format" : "int64"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Successfully created feedback",
+            "schema" : {
+              "$ref" : "#/definitions/Feedback"
+            }
+          },
+          "400" : {
+            "description" : "Bad request"
+          },
+          "404" : {
+            "description" : "Not found"
+          }
+        }
+      }
+    }
+  },
+  "definitions" : {
+    "Category" : {
+      "type" : "object",
+      "properties" : {
+        "id" : {
+          "type" : "integer",
+          "format" : "int64",
+          "description" : "The unique identifier for this resource"
+        },
+        "name" : {
+          "type" : "string",
+          "description" : "Category name"
+        },
+        "parentId" : {
+          "type" : "integer",
+          "format" : "int64",
+          "description" : "Category parent Id"
+        },
+        "sentiment" : {
+          "type" : "string",
+          "description" : "Category sentiment.",
+          "enum" : [ "BOTH", "NEGATIVE or POSITIVE" ]
+        }
+      },
+      "description" : "Feedback's category details"
+    },
+    "Feedback" : {
+      "type" : "object",
+      "required" : [ "responses" ],
+      "properties" : {
+        "responses" : {
+          "type" : "array",
+          "description" : "The response of the feedback",
+          "items" : {
+            "$ref" : "#/definitions/FeedbackResponse"
+          }
+        },
+        "timeLapse" : {
+          "type" : "string",
+          "description" : "The time lapse since sign up.",
+          "enum" : [ "SEVEN_DAYS", "THREE_MONTHS", "SIX_MONTHS", "TWELVE_MONTHS", "EIGHTEEN_MONTHS", "TWENTY_FOUR_MONTHS" ]
+        }
+      },
+      "description" : "Feedback details"
+    },
+    "FeedbackResponse" : {
+      "type" : "object",
+      "required" : [ "responseText" ],
+      "properties" : {
+        "responseText" : {
+          "type" : "string",
+          "description" : "The customers promoterResponse input"
+        },
+        "responseType" : {
+          "type" : "string",
+          "description" : "Type of promoterResponse. Must be one of [NPS_SCORE, COMMENT]",
+          "enum" : [ "NPS_SCORE", "COMMENT" ]
+        },
+        "categoryId" : {
+          "type" : "integer",
+          "format" : "int64",
+          "description" : "A category id can be provided to indicate the reason for the promoterResponse"
+        }
+      },
+      "description" : "FeedbackResponse details"
+    },
+    "Rating" : {
+      "type" : "object",
+      "required" : [ "response" ],
+      "properties" : {
+        "response" : {
+          "description" : "The response of the feedback",
+          "$ref" : "#/definitions/RatingResponse"
+        }
+      },
+      "description" : "Star rating feed details"
+    },
+    "RatingResponse" : {
+      "type" : "object",
+      "required" : [ "rating", "responseText" ],
+      "properties" : {
+        "responseText" : {
+          "type" : "string",
+          "description" : "The customers promoterResponse input"
+        },
+        "rating" : {
+          "type" : "string",
+          "description" : "Thumb up sentiment",
+          "enum" : [ "NEGATIVE", "POSITIVE" ]
+        },
+        "contactable" : {
+          "type" : "boolean",
+          "description" : "Contactable preference"
+        }
+      },
+      "description" : "FeedbackResponse details"
+    }
+  }
 }
